@@ -9,10 +9,22 @@ import Events from "../components/Pages/Events/Events";
 
 export const routes = createBrowserRouter([
     {path: '/', element:<Main></Main>, children: [
-        {path: '/', element: <Home></Home>},
+        {
+            path: '/',
+            loader: async () => {
+                return fetch('https://digital-academy-server.vercel.app/category')
+            } ,
+            element: <Home></Home>
+        },
         {path: 'courses', element:<Courses></Courses>},
         {path: 'about', element: <About></About>},
-        {path: 'success', element: <Success></Success>},
+        {
+            path: 'success',
+            loader: async () => {
+                return fetch('https://digital-academy-server.vercel.app/category')
+            } ,
+            element: <Success></Success>
+        },
         {path: 'events', element: <Events></Events>},
         {path: 'contact', element: <Contact></Contact>},
     ]}

@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Category = () => {
+const Category = ({ category }) => {
+    const {title, img} = category
     return (
-        <div>
-            <h1>Course Category</h1>
+        <div className="card w-11/12 bg-base-100 shadow-xl image-full">
+            <figure><img className='w-full' src={img} alt="category" /></figure>
+            <div className="card-body flex justify-center items-center">
+                <h2 className="card-title font-bold text-white">{title}</h2>
+            </div>
         </div>
     );
 };
