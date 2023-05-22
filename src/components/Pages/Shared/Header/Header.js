@@ -1,7 +1,17 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../../context/UserContext';
 
 const Header = () => {
+    const navigate = useNavigate()
+    const { user, logout } = useContext(AuthContext)
+
+    const singout = () => {
+        logout()
+        .then()
+        .catch(err => console.error(err))
+        navigate('/')
+    }
     return (
         <div className="navbar text-black font-bold bg-gradient-to-r from-gray-400 via-blue-200 to-gray-300">
             <div className="navbar-start">
@@ -31,10 +41,14 @@ const Header = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <Link className="btn btn-xs">Log in / Register</Link>
-                <div className='me-5 hidden'>
-                    <h1>Profile</h1>
-                </div>
+                {
+                    user ? 
+                        <div className='me-5 flex'>
+                            <h1><Link to="/profile">Profile</Link></h1> <h1 onClick={singout} className='ms-3'><Link>Log Out</Link></h1>
+                        </div>
+                        :
+                    <Link to="/login" className="btn btn-xs">Log in / Register</Link>
+                }
             </div>
         </div>
     );
