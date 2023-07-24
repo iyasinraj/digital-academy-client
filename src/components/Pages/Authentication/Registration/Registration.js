@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../context/UserContext';
 
 const Registration = () => {
-    const { regWithEmail, regWithGoogle } = useContext(AuthContext)
+    const { regWithEmail, regWithGoogle, regWithGithub, regWithFb } = useContext(AuthContext)
     const navigate = useNavigate()
     const [error, setError] = useState(null)
 
@@ -32,6 +32,25 @@ const Registration = () => {
     }
     const googleReg = () => {
         regWithGoogle()
+        .then(result => {
+            const user = result.user
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+    const gitReg = ()=>{
+        regWithGithub()
+        .then(result => {
+            const user = result.user
+            console.log(user)
+        })
+        .catch(error => {
+            console.error(error)
+        })
+    }
+    const fbReg = ()=>{
+        regWithFb()
         .then(result => {
             const user = result.user
             console.log(user)
@@ -86,8 +105,8 @@ const Registration = () => {
                                 <hr />
                                 <div className='px-4 flex justify-between'>
                                     <h1 onClick={googleReg}><Link>Google</Link></h1>
-                                    <h1>facebook</h1>
-                                    <h1>github</h1>
+                                    <h1 onClick={fbReg}><Link>Facebook</Link></h1>
+                                    <h1 onClick={gitReg}><Link>GitHub</Link></h1>
                                 </div>
                             </div>
                         </div>

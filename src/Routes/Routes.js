@@ -4,12 +4,13 @@ import Main from "../Layouts/Main";
 import About from "../components/Pages/About/About";
 import Contact from "../components/Pages/Contact/Contact";
 import Courses from "../components/Pages/Courses/Courses/Courses";
-import Success from "../components/Pages/Success/Success";
 import Events from "../components/Pages/Events/Events";
 import Login from "../components/Pages/Authentication/Login/Login";
 import Registration from "../components/Pages/Authentication/Registration/Registration";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../components/Pages/Profile/Dashboard/Dashboard";
+import PublicRoute from "./PublicRoute";
+import CourseDetails from "../components/Pages/Courses/Course/CourseDetails";
 
 export const routes = createBrowserRouter([
     {path: '/', element:<Main></Main>, children: [
@@ -26,18 +27,17 @@ export const routes = createBrowserRouter([
                 return fetch('https://digital-academy-server.vercel.app/courses')
             },
             element:<Courses></Courses>},
-        {path: 'about', element: <About></About>},
         {
-            path: 'success',
-            loader: async () => {
-                return fetch('https://digital-academy-server.vercel.app/category')
-            } ,
-            element: <Success></Success>
-        },
+            path: 'course/:id',
+            loader: async({params}) =>{
+                return fetch(`https://digital-academy-server.vercel.app/course/${params.id}`)
+            },
+            element:<CourseDetails></CourseDetails>},
+        {path: 'about', element: <About></About>},
         {path: 'events', element: <Events></Events>},
         {path: 'contact', element: <Contact></Contact>},
         {path: 'profile', element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute> },
-        {path: 'login', element: <Login></Login>},
-        {path: 'register', element: <Registration></Registration>}
+        {path: 'login', element:<PublicRoute><Login></Login></PublicRoute>},
+        {path: 'register', element: <PublicRoute><Registration></Registration></PublicRoute>}
     ]}
 ])

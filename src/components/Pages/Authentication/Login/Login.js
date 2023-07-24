@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../../context/UserContext';
 
 const Login = () => {
-    const {loginWithEmail} = useContext(AuthContext)
+    const {loginWithEmail, regWithGoogle, regWithGithub, regWithFb} = useContext(AuthContext)
     const location = useLocation()
     const from = location.state?.form?.pathname || '/'
 
@@ -13,7 +13,7 @@ const Login = () => {
         const form = e.target
         const email = form.email.value
         const password = form.password.value
-        console.log(email, password)
+
         loginWithEmail(email, password)
         .then(result =>{
             const user = result.user
@@ -22,6 +22,44 @@ const Login = () => {
         .catch(err => console.error(err))
         navigate(from, {replace: true})
         form.reset()
+
+    }
+    const loginWithGoogle = (e)=> {
+            regWithGoogle()
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
+    const loginWithGithub = (e)=> {
+            regWithGithub()
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
+    const loginWithFb = (e)=> {
+            regWithFb()
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }
+    
+    const loginGithub = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const email = form.email.value
+        const password = form.password.value
 
     }
     return (
@@ -41,13 +79,13 @@ const Login = () => {
                                         <label className="label">
                                             <span className="label-text">Email</span>
                                         </label>
-                                        <input type="email" name='email' placeholder="email" className="input input-bordered" />
+                                        <input type="email" name='email' placeholder="email" className="input input-bordered" required />
                                     </div>
                                     <div className="form-control">
                                         <label className="label">
                                             <span className="label-text">Password</span>
                                         </label>
-                                        <input type="password" name='password' placeholder="password" className="input input-bordered" />
+                                        <input type="password" name='password' placeholder="password" className="input input-bordered" required />
                                         <label className="label">
                                             <a href="/" className="label-text-alt link link-hover">Forgot password?</a>
                                         </label>
@@ -61,9 +99,9 @@ const Login = () => {
                                 <h1 className='text-center mb-4'>Or countinue with</h1>
                                 <hr />
                                 <div className='px-4 flex justify-between'>
-                                    <h1>google</h1>
-                                    <h1>facebook</h1>
-                                    <h1>github</h1>
+                                    <h1 onClick={loginWithGoogle}><Link>Google</Link></h1>
+                                    <h1 onClick={loginWithFb}><Link>Facebook</Link></h1>
+                                    <h1 onClick={loginWithGithub}><Link>GitHub</Link></h1>
                                 </div>
                             </div>
                         </div>
